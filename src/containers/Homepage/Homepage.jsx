@@ -1,17 +1,17 @@
-import React, { useState,useEffect } from "react";
+import React, { useState} from "react";
 import styled from "styled-components";
 import { Card, Pagination } from "antd";
 import { Link } from "react-router-dom";
 import SearchBar from "../../components/SearchBar";
 import axios from "axios";
 
-const { Meta } = Card;
 
 const Homepage = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageContent, setPageContent] = useState(10);
   const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [rating, setRating] = useState(5);
+  
 
 
   const updateSearchResults = (results) => {
@@ -21,7 +21,17 @@ const Homepage = () => {
   const onPageChange = (page) => {
     setPageNumber(page);
   };
-
+  // const handleRatingFunc = async(id)=>{
+  //   console.log("Card id : ",id)
+  //   await axios.get(
+  //     `${process.env.REACT_APP_BACKEND_URL}/api/reviews/${id}`
+  //   ).then((res)=>{
+  //     setRating(res.data.overallRating);   
+  //   }).catch((err)=>{
+  //     // setRating(0);   
+  //     console.log(err)
+  //   })
+  // }
   return (
     <StyledDiv>
       <div className="search">
@@ -33,7 +43,7 @@ const Homepage = () => {
             .slice((pageNumber - 1) * pageContent, pageNumber * pageContent)
             .map((item) => {
             //   <Link key={item.id} to={`/details/${item.id}`}>
-                // handleRatingFunc(item.id)
+                // handleRatingFunc(item.id);
                 return <Card
                   title={item.name}
                   extra={
@@ -60,7 +70,8 @@ const Homepage = () => {
                   </p>
                   <p>
                     <span style={{ fontWeight: "600" }}>Current Rating: </span>
-                    {5}
+                    {rating}
+                    
                   </p>
                   <p>
                     <span style={{ fontWeight: "600" }}>State: </span>
