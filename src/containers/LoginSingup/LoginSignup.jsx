@@ -19,7 +19,7 @@ const LoginSignup = () => {
 
   const handleFormSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., send data to a server)
+    // Handle form submission logic here 
     if(login){
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/login`,formData)
       console.log(response.data);
@@ -33,7 +33,7 @@ const LoginSignup = () => {
       console.log(response.data);
       localStorage.setItem("token",response.data.token)
     }
-    // For simplicity, just log the form data for now
+    
     console.log('Form Data Submitted:', formData);
   };
 

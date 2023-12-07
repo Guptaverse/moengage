@@ -21,11 +21,7 @@ const Homepage = () => {
   const onPageChange = (page) => {
     setPageNumber(page);
   };
-  // async function handleRatingFunc(id){
-  //   const res = await axios.get(`/reviews/${id}`)
 
-  //   return res.data.overallRating;
-  // } 
   return (
     <StyledDiv>
       <div className="search">

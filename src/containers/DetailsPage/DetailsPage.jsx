@@ -42,7 +42,7 @@ const DetailsPage = () => {
     setNewReview("");
   };
   const handleRating = (selectedRating) => {
-    // Handle the rating as needed (e.g., send it to a server, update state, etc.)
+
     setRating(selectedRating)
   };
   return (
