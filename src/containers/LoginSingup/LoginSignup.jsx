@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './LoginSignup.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { message } from 'antd'; 
 
 const LoginSignup = () => {
-  const navigation = useNavigate()
-  const [login, setLogin] = useState(true); // State to track whether the user is on the login or signup form
+  const navigation = useNavigate();
+  const [login, setLogin] = useState(true);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -17,24 +18,37 @@ const LoginSignup = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleFormSubmit = async(e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here 
-    if(login){
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/login`,formData)
-      console.log(response.data);
-      if(response.data.success){
-        localStorage.setItem("token",response.data.token)
-        navigation('/home')
+
+    try {
+      if (login) {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/login`, formData);
+        console.log(response.data);
+        if (response.data.success) {
+          localStorage.setItem('token', response.data.token);
+          navigation('/home');
+        }
+      } else {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/register`, formData);
+        console.log(response.data);
+        localStorage.setItem('token', response.data.token);
+        message.success('User created successfully. Switching to login.');
+
+        // Switch to login form
+        setLogin(true);
+
+        // Clear form inputs
+        setFormData({
+          username: '',
+          email: '',
+          password: '',
+        });
       }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      message.error('Error submitting form. Please try again.');
     }
-    else{
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/register`,formData)
-      console.log(response.data);
-      localStorage.setItem("token",response.data.token)
-    }
-    
-    console.log('Form Data Submitted:', formData);
   };
 
   const toggleForm = () => {
@@ -81,7 +95,9 @@ const LoginSignup = () => {
           />
         </div>
         <button type="submit">{login ? 'Login' : 'Sign Up'}</button>
-        <p onClick={toggleForm}>{login ? 'Need an account? Sign up' : 'Already have an account? Login'}</p>
+        <p onClick={toggleForm}>
+          {login ? 'Need an account? Sign up' : 'Already have an account? Login'}
+        </p>
       </form>
     </div>
   );

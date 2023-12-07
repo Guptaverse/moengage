@@ -8,7 +8,7 @@ import DetailsPage from './containers/DetailsPage/DetailsPage';
 const App = () => {
   return (
     <div className='App'>
-    <h1 style={{color:"white",textAlign:"center"}}>Brewery Search App</h1>
+    <h1 style={{color:"white",textAlign:"center",backgroundColor:"orange",padding:"5px",borderRadius:"5px"}}>Brewery Search App</h1>
     <Router>
       <Routes>
         <Route path = "/" element={<LoginSignup/>} />
